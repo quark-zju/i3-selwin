@@ -1,10 +1,10 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"github.com/proxypoke/i3ipc"
 	"log"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -44,7 +44,7 @@ func main() {
 		input += c.Name + "\n"
 	}
 
-	cmd := exec.Command("dmenu", flag.Args()...)
+	cmd := exec.Command("dmenu", os.Args[1:len(os.Args)]...)
 	cmd.Stdin = strings.NewReader(input)
 
 	out, e := cmd.Output()
