@@ -43,21 +43,27 @@ func main() {
 	tree, e := ipc.GetTree()
 	checkError(e)
 
-	names, nodes := dfsTree(&tree)
-
-	cmd := exec.Command("dmenu", os.Args[1:len(os.Args)]...)
-	cmd.Stdin = strings.NewReader(strings.Join(names, "\n"))
-
-	out, e := cmd.Output()
-	checkError(e)
-
-	name := strings.TrimRight(string(out), "\n")
-
 	var node *i3ipc.I3Node
-	for i, s := range names {
-		if s == name {
-			node = nodes[i]
-			break
+	names, nodes := dfsTree(&tree)
+	switch len(names) {
+	case 0:
+		os.Exit(0)
+	case 1:
+		node = nodes[0]
+	default:
+		cmd := exec.Command("dmenu", os.Args[1:len(os.Args)]...)
+		cmd.Stdin = strings.NewReader(strings.Join(names, "\n"))
+
+		out, e := cmd.Output()
+		checkError(e)
+
+		name := strings.TrimRight(string(out), "\n")
+
+		for i, s := range names {
+			if s == name {
+				node = nodes[i]
+				break
+			}
 		}
 	}
 
