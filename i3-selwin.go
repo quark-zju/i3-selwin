@@ -14,7 +14,11 @@ func dfsTree(t *i3ipc.I3Node) (names []string, nodes []*i3ipc.I3Node) {
 	}
 
 	if t.Geometry.Width > 0 && t.Geometry.Height > 0 && t.Window > 0 && !t.Focused {
-		names = append(names, t.Name)
+		name := t.Name
+		if len(name) == 0 {
+			name = fmt.Sprint("(Unnamed) ", t.Window)
+		}
+		names = append(names, name)
 		nodes = append(nodes, t)
 	}
 	visitChildren := func(children *[]i3ipc.I3Node) {
