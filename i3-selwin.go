@@ -9,6 +9,10 @@ import (
 )
 
 func dfsTree(t *i3ipc.I3Node) (names []string, nodes []*i3ipc.I3Node) {
+	if t.Layout == "dockarea" {
+		return
+	}
+
 	if t.Geometry.Width > 0 && t.Geometry.Height > 0 && t.Window > 0 && !t.Focused {
 		names = append(names, t.Name)
 		nodes = append(nodes, t)
