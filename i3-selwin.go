@@ -14,8 +14,8 @@ func dfsTree(t *i3ipc.I3Node) (names []string, nodes []*i3ipc.I3Node) {
 		names = append(names, t.Name)
 		nodes = append(nodes, t)
 	}
-	for _, c := range t.Nodes {
-		newNames, newNodes := dfsTree(&c)
+	for i, _ := range t.Nodes {
+		newNames, newNodes := dfsTree(&t.Nodes[i])
 		names = append(names, newNames...)
 		nodes = append(nodes, newNodes...)
 	}
