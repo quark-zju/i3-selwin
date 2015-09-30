@@ -1,6 +1,6 @@
 # i3-selwin
 
-Search and jump to a specified window by title. Require [i3wm](http://i3wm.org/) and [dmenu](http://tools.suckless.org/dmenu/).
+Search and jump to a specified window by title. Inspired by [ctrlp.vim](http://kien.github.io/ctrlp.vim/). Require [i3wm](http://i3wm.org/) and [dmenu](http://tools.suckless.org/dmenu/).
 
 ## Build
 
