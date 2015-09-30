@@ -9,17 +9,15 @@ import (
 	"strings"
 )
 
-type Candidate struct {
-	Name string
-	Id   int32
-}
-
-func dfsTree(t *i3ipc.I3Node) (cands []*Candidate) {
-	if t.Geometry.Width > 0 && t.Geometry.Height > 0 && t.Window > 0 {
-		cands = append(cands, &Candidate{Name: t.Name, Id: t.Id})
+func dfsTree(t *i3ipc.I3Node) (names []string, nodes []*i3ipc.I3Node) {
+	if t.Geometry.Width > 0 && t.Geometry.Height > 0 && t.Window > 0 && !t.Focused {
+		names = append(names, t.Name)
+		nodes = append(nodes, t)
 	}
 	for _, c := range t.Nodes {
-		cands = append(cands, dfsTree(&c)...)
+		newNames, newNodes := dfsTree(&c)
+		names = append(names, newNames...)
+		nodes = append(nodes, newNodes...)
 	}
 	return
 }
@@ -34,34 +32,29 @@ func main() {
 	ipc, e := i3ipc.GetIPCSocket()
 	checkError(e)
 
-	n, e := ipc.GetTree()
+	tree, e := ipc.GetTree()
 	checkError(e)
 
-	cands := dfsTree(&n)
-
-	var input string
-	for _, c := range cands {
-		input += c.Name + "\n"
-	}
+	names, nodes := dfsTree(&tree)
 
 	cmd := exec.Command("dmenu", os.Args[1:len(os.Args)]...)
-	cmd.Stdin = strings.NewReader(input)
+	cmd.Stdin = strings.NewReader(strings.Join(names, "\n"))
 
 	out, e := cmd.Output()
 	checkError(e)
 
 	name := strings.TrimRight(string(out), "\n")
 
-	var cand *Candidate
-	for _, c := range cands {
-		if c.Name == name {
-			cand = c
+	var node *i3ipc.I3Node
+	for i, s := range names {
+		if s == name {
+			node = nodes[i]
 			break
 		}
 	}
 
-	if cand != nil {
-		msg := fmt.Sprint("[con_id=", cand.Id, "] focus")
+	if node != nil {
+		msg := fmt.Sprint("[con_id=", node.Id, "] focus")
 		ipc.Raw(i3ipc.I3Command, msg)
 	}
 }
