@@ -4,8 +4,9 @@ Search and jump to a specified window by title. Require [i3wm](http://i3wm.org/)
 
 ## Build
 
-Use standard go tool:
+Use standard go tool with [vendor support](https://golang.org/s/go15vendor):
 
+    export GO15VENDOREXPERIMENT=1
     go get gitcafe.com/quark/i3-selwin
 
 ## Configuration
