@@ -29,6 +29,7 @@ type I3Node struct {
 	Urgent               bool
 	Focused              bool
 	Nodes                []I3Node
+	FloatingNodes        []I3Node `json:"floating_nodes"`
 }
 
 // GetTree fetches the layout tree.

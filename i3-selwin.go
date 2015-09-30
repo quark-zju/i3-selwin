@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/proxypoke/i3ipc"
-	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -14,17 +13,22 @@ func dfsTree(t *i3ipc.I3Node) (names []string, nodes []*i3ipc.I3Node) {
 		names = append(names, t.Name)
 		nodes = append(nodes, t)
 	}
-	for i, _ := range t.Nodes {
-		newNames, newNodes := dfsTree(&t.Nodes[i])
-		names = append(names, newNames...)
-		nodes = append(nodes, newNodes...)
+	visitChildren := func(children *[]i3ipc.I3Node) {
+		for i, _ := range *children {
+			newNames, newNodes := dfsTree(&(*children)[i])
+			names = append(names, newNames...)
+			nodes = append(nodes, newNodes...)
+		}
 	}
+	visitChildren(&t.FloatingNodes)
+	visitChildren(&t.Nodes)
 	return
 }
 
 func checkError(e error) {
 	if e != nil {
-		log.Fatal(e)
+		fmt.Fprintln(os.Stderr, e)
+		os.Exit(0)
 	}
 }
 
