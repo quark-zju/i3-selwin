@@ -36,7 +36,7 @@ func dfsTree(t *i3ipc.I3Node) (names []string, nodes []*i3ipc.I3Node) {
 func checkError(e error) {
 	if e != nil {
 		fmt.Fprintln(os.Stderr, e)
-		os.Exit(0)
+		os.Exit(1)
 	}
 }
 
