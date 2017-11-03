@@ -16,7 +16,7 @@ import (
 // Struct representing a Node in the i3 tree. For documentation of the fields,
 // refer to http://i3wm.org/docs/ipc.html#_tree_reply.
 type I3Node struct {
-	Id                   int32
+	Id                   int64
 	Name                 string
 	Border               string
 	Current_Border_Width int32
