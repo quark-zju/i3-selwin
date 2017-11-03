@@ -72,7 +72,11 @@ func main() {
 	}
 
 	if node != nil {
-		msg := fmt.Sprint("[con_id=", node.Id, "] focus")
-		ipc.Raw(i3ipc.I3Command, msg)
+		msg := fmt.Sprint("[con_id=\"", node.Id, "\"] focus")
+		fmt.Print("Sent: ", msg, "\n")
+		reply, err := ipc.Raw(i3ipc.I3Command, msg)
+		checkError(err)
+		s := string(reply)
+		fmt.Print("Received: ", s, "\n")
 	}
 }
