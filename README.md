@@ -4,9 +4,15 @@ Search and jump to a specified window by title. Inspired by [ctrlp.vim](http://k
 
 ## Install
 
-    go install github.com/quark-zju/i3-selwin@latest
+Run:
+
+    go install github.com/quark-zju/i3-selwin@e7ff8c06f62f16f6e96b650c52e69f64bf1a0672
+
+By default the installed binary can be found at `~/go/bin/i3-selwin`.
 
 ## Build from source
+
+Clone the repo, then run:
 
     go build
 
