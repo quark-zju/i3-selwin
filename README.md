@@ -2,12 +2,13 @@
 
 Search and jump to a specified window by title. Inspired by [ctrlp.vim](http://kien.github.io/ctrlp.vim/). Require [i3wm](http://i3wm.org/) and [dmenu](http://tools.suckless.org/dmenu/).
 
-## Build
+## Install
 
-Use standard go tool with [vendor support](https://golang.org/s/go15vendor):
+    go install github.com/quark-zju/i3-selwin@latest
 
-    export GO15VENDOREXPERIMENT=1
-    go get gitcafe.com/quark/i3-selwin
+## Build from source
+
+    go build
 
 ## Configuration
 
