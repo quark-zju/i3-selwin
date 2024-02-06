@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/proxypoke/i3ipc"
+	"github.com/quark-zju/i3-selwin/i3ipc"
 	"os"
 	"os/exec"
 	"strings"
